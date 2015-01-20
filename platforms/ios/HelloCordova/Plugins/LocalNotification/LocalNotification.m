@@ -123,7 +123,8 @@ static UILocalNotification *localNotification = nil;
     // Check current user notification settings on iOS8
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         UIUserNotificationSettings *una = [[UIApplication sharedApplication] currentUserNotificationSettings];
-        if (una.types != (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)) {
+        if ((una.types != (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)) &&
+            (una.types != (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound))) {
             // We cannot send a notification, the user has blocked notifications
             CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"USER_DISABLED"];
             [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
@@ -178,7 +179,8 @@ static UILocalNotification *localNotification = nil;
     // Check current user notification settings on iOS8
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         UIUserNotificationSettings *una = [[UIApplication sharedApplication] currentUserNotificationSettings];
-        if (una.types != (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)) {
+        if ((una.types != (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)) &&
+            (una.types != (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound)))
             // We cannot send a notification, the user has blocked notifications
             CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"USER_DISABLED"];
             [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
