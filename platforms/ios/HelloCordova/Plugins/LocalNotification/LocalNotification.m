@@ -88,7 +88,7 @@ static UILocalNotification *localNotification = nil;
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         [[UIApplication sharedApplication] registerUserNotificationSettings:
          [UIUserNotificationSettings settingsForTypes:
-          (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound) categories:NULL]];
+          (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:NULL]];
     }
 
     // Register the instance to observe CDVLocalNotification notifications
