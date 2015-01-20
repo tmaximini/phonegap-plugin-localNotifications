@@ -47,7 +47,7 @@ static UILocalNotification *localNotification = nil;
 + (void)didFinishLaunching:(NSNotification *)notification {
     // This code will be called immediately after application:didFinishLaunchingWithOptions:.
     NSDictionary *launchOptions = [notification userInfo];
-    
+
     UILocalNotification *localNotif = [launchOptions objectForKey: @"UIApplicationLaunchOptionsLocalNotificationKey"];
     if (localNotif) {
         launchedWithNotification = YES;
@@ -61,7 +61,7 @@ static UILocalNotification *localNotification = nil;
 + (void)willTerminate:(NSNotification *)notification {
     // Stop the class from observing all notification center notifications.
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+
     // Release the notification
     [localNotification release];
 }
@@ -70,15 +70,15 @@ static UILocalNotification *localNotification = nil;
 
 - (void)dealloc {
     self.notificationQueue = nil;
-    
+
     // Stop the instance from observing all notification center notifications.
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+
     [super dealloc];
 }
 
 -(CDVPlugin *)initWithWebView:(UIWebView *)theWebView {
-    
+
     self = (LocalNotification *)[super initWithWebView:theWebView];
 
     // initiate empty Notification Queue
@@ -88,7 +88,7 @@ static UILocalNotification *localNotification = nil;
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         [[UIApplication sharedApplication] registerUserNotificationSettings:
          [UIUserNotificationSettings settingsForTypes:
-          (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound) categories:NULL]];
+          (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:NULL]];
     }
 
     // Register the instance to observe CDVLocalNotification notifications
@@ -123,7 +123,7 @@ static UILocalNotification *localNotification = nil;
     // Check current user notification settings on iOS8
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         UIUserNotificationSettings *una = [[UIApplication sharedApplication] currentUserNotificationSettings];
-        if (una.types != (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)) {
+        if (una.types != (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)) {
             // We cannot send a notification, the user has blocked notifications
             CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"USER_DISABLED"];
             [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
@@ -149,7 +149,7 @@ static UILocalNotification *localNotification = nil;
     notif.soundName = UILocalNotificationDefaultSoundName;
     notif.applicationIconBadgeNumber = badge;
 
-    NSDictionary *userDict = [NSDictionary dictionaryWithObject:notificationId 
+    NSDictionary *userDict = [NSDictionary dictionaryWithObject:notificationId
                                                          forKey:@"notificationId"];
     notif.userInfo = userDict;
 
@@ -162,8 +162,8 @@ static UILocalNotification *localNotification = nil;
             // it is the same so cancel it
             WizLog(@"Notification Canceled: %@", notificationId);
             [[UIApplication sharedApplication] cancelLocalNotification:notification];
-            
-        } 
+
+        }
     }
     // now schedule new one
     NSLog(@"Notification Set: %@ (ID: %@, Badge: %i)", date , notificationId, badge);
@@ -179,7 +179,7 @@ static UILocalNotification *localNotification = nil;
     // Check current user notification settings on iOS8
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         UIUserNotificationSettings *una = [[UIApplication sharedApplication] currentUserNotificationSettings];
-        if (una.types != (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)) {
+        if (una.types != (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)) {
             // We cannot send a notification, the user has blocked notifications
             CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"USER_DISABLED"];
             [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
@@ -208,7 +208,7 @@ static UILocalNotification *localNotification = nil;
     } else {
         active = @"false";
     }
-    
+
     NSString *jsString = [NSString stringWithFormat:@"cordova.fireDocumentEvent('receivedLocalNotification', \
                           { active : %@, notificationId : \'%@\' })", active, [[notification.object userInfo] objectForKey:@"notificationId"]];
     NSLog(@"CALLING JAVASCRIPT METHOD: %@", jsString);
@@ -216,7 +216,7 @@ static UILocalNotification *localNotification = nil;
 }
 
 - (void)emptyNotificationQueue:(NSNotification *)notification {
-    
+
     LocalNotification *_localNotification = [[LocalNotification alloc] init];
 
     // Add all notifications from the notificationQueue dictionary and empty it
