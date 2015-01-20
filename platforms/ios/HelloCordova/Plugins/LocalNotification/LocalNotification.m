@@ -88,7 +88,7 @@ static UILocalNotification *localNotification = nil;
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         [[UIApplication sharedApplication] registerUserNotificationSettings:
          [UIUserNotificationSettings settingsForTypes:
-          (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:NULL]];
+          (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound) categories:NULL]];
     }
 
     // Register the instance to observe CDVLocalNotification notifications
@@ -146,7 +146,6 @@ static UILocalNotification *localNotification = nil;
     notif.timeZone  = [NSTimeZone defaultTimeZone];
     notif.alertBody = ([msg isEqualToString:@""])?nil:msg;
     notif.alertAction = action;
-    notif.soundName = UILocalNotificationDefaultSoundName;
     notif.applicationIconBadgeNumber = badge;
 
     NSDictionary *userDict = [NSDictionary dictionaryWithObject:notificationId
