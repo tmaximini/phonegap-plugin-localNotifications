@@ -5,13 +5,13 @@
     version="2.1.0">
 
     <name>Local Notification Plugin</name>
-    
+
     <description>This plugin allows you to add, queue, cancel by id and cancel all local notifications.</description>
-    
+
     <author>Ally Ogilvie - aogilvie@wizcorp.jp</author>
-    
+
     <keywords>local, notification, notifications</keywords>
-	
+
 	<engines>
 	    <engine name="cordova" version=">=3.0.0" />
 	</engines>
@@ -30,13 +30,14 @@
 			<param name="android-package" value="jp.wizcorp.phonegap.plugin.localNotification.LocalNotification"/>
 		</feature>
     </config-file>
-    
+
     <config-file target="AndroidManifest.xml" parent="/manifest">
     	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     	<uses-permission android:name="android.permission.VIBRATE" />
-    </config-file>   
-    
+    </config-file>
+
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        <activity android:name="jp.wizcorp.phonegap.plugin.localNotification.AlarmHelper" />
     	<receiver android:name="jp.wizcorp.phonegap.plugin.localNotification.AlarmReceiver" ></receiver>
     	<receiver android:name="jp.wizcorp.phonegap.plugin.localNotification.AlarmRestoreOnBoot" >
 	    	<intent-filter>
@@ -45,18 +46,18 @@
     	</receiver>
     </config-file>
 
-    <source-file src="platforms/android/src/jp/wizcorp/phonegap/plugin/localNotification/LocalNotification.java" 
+    <source-file src="platforms/android/src/jp/wizcorp/phonegap/plugin/localNotification/LocalNotification.java"
             target-dir="src/jp/wizcorp/phonegap/plugin/localNotification"/>
-    <source-file src="platforms/android/src/jp/wizcorp/phonegap/plugin/localNotification/AlarmHelper.java" 
-            target-dir="src/jp/wizcorp/phonegap/plugin/localNotification"/> 
-            <source-file src="platforms/android/src/jp/wizcorp/phonegap/plugin/localNotification/AlarmOptions.java" 
-            target-dir="src/jp/wizcorp/phonegap/plugin/localNotification"/> 
-            <source-file src="platforms/android/src/jp/wizcorp/phonegap/plugin/localNotification/AlarmReceiver.java" 
-            target-dir="src/jp/wizcorp/phonegap/plugin/localNotification"/> 
-            <source-file src="platforms/android/src/jp/wizcorp/phonegap/plugin/localNotification/AlarmRestoreOnBoot.java" 
-            target-dir="src/jp/wizcorp/phonegap/plugin/localNotification"/> 
+    <source-file src="platforms/android/src/jp/wizcorp/phonegap/plugin/localNotification/AlarmHelper.java"
+            target-dir="src/jp/wizcorp/phonegap/plugin/localNotification"/>
+            <source-file src="platforms/android/src/jp/wizcorp/phonegap/plugin/localNotification/AlarmOptions.java"
+            target-dir="src/jp/wizcorp/phonegap/plugin/localNotification"/>
+            <source-file src="platforms/android/src/jp/wizcorp/phonegap/plugin/localNotification/AlarmReceiver.java"
+            target-dir="src/jp/wizcorp/phonegap/plugin/localNotification"/>
+            <source-file src="platforms/android/src/jp/wizcorp/phonegap/plugin/localNotification/AlarmRestoreOnBoot.java"
+            target-dir="src/jp/wizcorp/phonegap/plugin/localNotification"/>
     </platform>
-    
+
     <!-- ios -->
     <platform name="ios">
 
@@ -67,7 +68,7 @@
             </feature>
         	<plugin name="LocalNotification" value="LocalNotification"/>
         </config-file>
-               
+
         <!-- Plugin files -->
         <header-file src="platforms/ios/HelloCordova/Plugins/LocalNotification/LocalNotification.h" />
         <source-file src="platforms/ios/HelloCordova/Plugins/LocalNotification/LocalNotification.m" compiler-flags="-fno-objc-arc" />
@@ -77,7 +78,7 @@
         	target-dir="WizCanvas" />
 
     </platform>
-    
+
     <license>MIT</license>
 
 </plugin>
